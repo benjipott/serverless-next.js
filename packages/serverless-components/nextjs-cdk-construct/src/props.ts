@@ -38,6 +38,10 @@ export interface Props extends StackProps {
    */
   timeout?: LambdaOption<Duration>;
   /**
+   * Lambda versioning
+   */
+  versionFunctions?: LambdaOption<boolean>;
+  /**
    * Lambda name(s)
    */
   name?: LambdaOption<string>;

@@ -458,6 +458,20 @@ myNextApplication:
       imageLambda: fooImageLambda
 ```
 
+Values for **default**, **api**, and **image** lambdas can be separately defined by assigning `versionFunctions` to an object like so:
+
+```yml
+# serverless.yml
+
+myNextApplication:
+  component: "@sls-next/serverless-component@{version_here}"
+  inputs:
+    versionFunctions:
+      defaultLambda: true
+      apiLambda: false
+      imageLambda: false
+```
+
 ### Architecture
 
 ![architecture](./img/arch_no_grid.png)
@@ -770,7 +784,7 @@ Please see the [contributing](./CONTRIBUTING.md) guide.
 
 This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
 <a href="https://github.com/serverless-nextjs/serverless-next.js/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=serverless-nextjs/serverless-next.js" />
+<img src="https://contrib.rocks/image?repo=serverless-nextjs/serverless-next.js" />
 </a>
 
 Made with [contributors-img](https://contrib.rocks).

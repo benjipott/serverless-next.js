@@ -428,10 +428,10 @@ class NextjsComponent extends Component {
         Object.keys(apiBuildManifest.apis.dynamic).length > 0);
 
     const readLambdaInputValue = (
-      inputKey: "memory" | "timeout" | "name" | "runtime",
+      inputKey: "memory" | "timeout" | "name" | "runtime" | "versionFunctions",
       lambdaType: LambdaType,
-      defaultValue: string | number | undefined
-    ): string | number | undefined => {
+      defaultValue: string | number | boolean | undefined
+    ): string | number | boolean | undefined => {
       const inputValue = inputs[inputKey];
 
       if (typeof inputValue === "string" || typeof inputValue === "number") {
@@ -496,6 +496,11 @@ class NextjsComponent extends Component {
           "apiLambda",
           "nodejs12.x"
         ) as string,
+        versionFunctions: !!readLambdaInputValue(
+          "versionFunctions",
+          "apiLambda",
+          false
+        ),
         name: readLambdaInputValue("name", "apiLambda", undefined) as
           | string
           | undefined
@@ -549,6 +554,11 @@ class NextjsComponent extends Component {
           "imageLambda",
           "nodejs12.x"
         ) as string,
+        versionFunctions: !!readLambdaInputValue(
+          "versionFunctions",
+          "imageLambda",
+          false
+        ),
         name: readLambdaInputValue("name", "imageLambda", undefined) as
           | string
           | undefined
@@ -605,6 +615,11 @@ class NextjsComponent extends Component {
         "defaultLambda",
         "nodejs12.x"
       ) as string,
+      versionFunctions: !!readLambdaInputValue(
+        "versionFunctions",
+        "defaultLambda",
+        false
+      ),
       name: readLambdaInputValue("name", "defaultLambda", undefined) as
         | string
         | undefined

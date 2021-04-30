@@ -37,6 +37,7 @@ export type ServerlessComponentInputs = {
   imageOptimizer?: boolean;
   certificateArn?: string;
   enableS3Acceleration?: boolean;
+  versionFunctions?: boolean;
 };
 
 type CloudfrontOptions = Record<string, any>;
@@ -62,4 +63,5 @@ export type LambdaInput = {
   timeout: number;
   runtime: string;
   name?: string;
+  versionFunctions?: boolean;
 };

@@ -96,6 +96,7 @@ describe("deploy tests", () => {
         memory: 512,
         timeout: 10,
         runtime: "nodejs12.x",
+        versionFunctions: expect.any(Boolean),
         role: {
           service: ["lambda.amazonaws.com", "edgelambda.amazonaws.com"],
           policy: {
@@ -129,6 +130,7 @@ describe("deploy tests", () => {
         memory: 512,
         timeout: 10,
         runtime: "nodejs12.x",
+        versionFunctions: expect.any(Boolean),
         role: {
           service: ["lambda.amazonaws.com", "edgelambda.amazonaws.com"],
           policy: {
@@ -162,6 +164,7 @@ describe("deploy tests", () => {
         memory: 512,
         timeout: 10,
         runtime: "nodejs12.x",
+        versionFunctions: expect.any(Boolean),
         role: {
           service: ["lambda.amazonaws.com", "edgelambda.amazonaws.com"],
           policy: {

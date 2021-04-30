@@ -500,6 +500,61 @@ describe("Custom inputs", () => {
   });
 
   describe.each`
+    inputVersionFunctions                        | expectedVersionFunctions
+    ${undefined}                                 | ${{ defaultVersionFunctions: true, apiVersionFunctions: true }}
+    ${{}}                                        | ${{ defaultVersionFunctions: true, apiVersionFunctions: true }}
+    ${false}                                     | ${{ defaultVersionFunctions: true, apiVersionFunctions: true }}
+    ${{ defaultLambda: false }}                  | ${{ defaultVersionFunctions: false, apiVersionFunctions: false }}
+    ${{ apiLambda: false }}                      | ${{ defaultVersionFunctions: false, apiVersionFunctions: false }}
+    ${{ defaultLambda: false, apiLambda: true }} | ${{ defaultVersionFunctions: false, apiVersionFunctions: true }}
+  `(
+    "Input runtime options",
+    ({ inputVersionFunctions, expectedVersionFunctions }) => {
+      let tmpCwd: string;
+      const fixturePath = path.join(__dirname, "./fixtures/generic-fixture");
+
+      beforeEach(async () => {
+        tmpCwd = process.cwd();
+        process.chdir(fixturePath);
+
+        mockServerlessComponentDependencies({ expectedDomain: undefined });
+
+        const component = createNextComponent();
+
+        componentOutputs = await component.default({
+          versionFunctions: inputVersionFunctions
+        });
+      });
+
+      afterEach(() => {
+        process.chdir(tmpCwd);
+        return cleanupFixtureDirectory(fixturePath);
+      });
+
+      it(`sets default lambda versionFunctions to ${expectedVersionFunctions.defaultVersionFunctions} and api lambda runtime to ${expectedVersionFunctions.apiVersionFunctions} `, () => {
+        const {
+          defaultVersionFunctions,
+          apiVersionFunctions
+        } = expectedVersionFunctions;
+
+        expect(mockLambda).toBeCalledWith(
+          expect.objectContaining({
+            code: path.join(fixturePath, DEFAULT_LAMBDA_CODE_DIR),
+            versionFunctions: defaultVersionFunctions
+          })
+        );
+
+        expect(mockLambda).toBeCalledWith(
+          expect.objectContaining({
+            code: path.join(fixturePath, API_LAMBDA_CODE_DIR),
+            versionFunctions: apiVersionFunctions
+          })
+        );
+      });
+    }
+  );
+
+  describe.each`
     inputName                                                     | expectedName
     ${undefined}                                                  | ${{ defaultName: undefined, apiName: undefined }}
     ${{}}                                                         | ${{ defaultName: undefined, apiName: undefined }}
